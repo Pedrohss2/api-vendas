@@ -26,6 +26,6 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
   });
 });
 
-app.listen(3000, () => {
-  console.log(`App rodando na porta 3000`);
+app.listen(8080, () => {
+  console.log(`App rodando na porta 8080`);
 });
