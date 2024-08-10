@@ -11,8 +11,8 @@ interface IRequest {
 }
 
 class CreateProductService {
-  
-  public async create ({ name, price, quantity }: IRequest): Promise<Product> {
+
+  public async create({ name, price, quantity }: IRequest): Promise<Product> {
     const productsRepository = getCustomRepository(ProductsRepository);
     const productExist = await productsRepository.findByName(name);
     
