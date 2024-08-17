@@ -13,11 +13,14 @@ interface IRequest {
 
 class CreateUserService {
 
-  public async create({ name, email, password }: IRequest): Promise<User | AppError> {
+  public async create({ name, email, password }: IRequest): Promise<User> {
     const userRepository = getCustomRepository(UserRepository);
     const emailExist = await userRepository.findByEmail(email);
 
+    if (emailExist) throw new AppError("There is already one user with this email!", 404);
+
     const hashedPassword = await hash(password, 8);
+
     const user = userRepository.create({
       name,
       email,
@@ -26,7 +29,7 @@ class CreateUserService {
 
     await userRepository.save(user);
 
-    return emailExist ? new AppError("There is already one user with this email!", 404) : user;
+    return user;
   }
 }
 
