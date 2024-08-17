@@ -12,9 +12,7 @@ class DeleteProductService {
     const productsRepository = getCustomRepository(ProductsRepository);
     const product = await productsRepository.findOne(id);
 
-    if (!product) {
-      throw new AppError("Product not found!", 404);
-    }
+    if (!product) throw new AppError("Product not found!", 404);
   
     await productsRepository.remove(product);
   }
