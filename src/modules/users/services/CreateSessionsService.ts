@@ -5,6 +5,7 @@ import { getCustomRepository } from "typeorm";
 import express from "express";
 import { compare } from 'bcryptjs';
 import { sign } from "jsonwebtoken";
+import authConfig from "@config/auth";
  
 interface IRequest {
   email: string;
@@ -27,10 +28,10 @@ class CreateSessionsService {
 
     if (!passwordConfirmed) throw new AppError("Incorrect email/password combination!", 401);
     
-    const token = sign({}, "c7e3ef10bdfae756b653a4bcdece8aba", { 
+    const token = sign({}, authConfig.jwt.secret, {
       subject: user.id,
-      expiresIn: '1d'
-    })
+      expiresIn: authConfig.jwt.expiresIn
+    });
 
     return { token };
   }
