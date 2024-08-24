@@ -2,7 +2,7 @@ import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 import UsersController from "../controllers/UsersController";
 import UserRepository from "../typeorm/repositories/UserRepository";
-import isAuthenticated from "../middlewares/isAuthenticated";
+import isAuthenticated from "../../../shared/http/middlewares/isAuthenticated";
 
 const usersRouter = Router();
 const usersController = new UsersController();
