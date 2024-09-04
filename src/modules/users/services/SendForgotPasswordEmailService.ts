@@ -1,9 +1,9 @@
 import AppError from "@shared/errors/appError";
 import { getCustomRepository } from "typeorm";
+import path from "path";
 import UserRepository from "../typeorm/repositories/UserRepository";
 import UserTokensRepository from "../typeorm/repositories/UserTokensRepository";
 import EtherealMail from "@config/mail/EtherealMail";
-import e from "express";
 
 interface IRequest {
   email: string;
@@ -19,11 +19,23 @@ class SendForgotPasswordEmailService {
 
     if (!user) throw new AppError('User does not exists!');
 
-    const token = await userTokneRepository.generate(user.id);
+    const { token }  = await userTokneRepository.generate(user.id);
+
+    const forgotPasswordTemplate = path.resolve(__dirname, '..', 'views', 'forgot_password.hbs');
 
     await EtherealMail.sendMail({
-      to: email,
-      body: `Solicitação de redefinição de senha recebida: ${token?.token}`,
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[API DE VENSAS]',
+      templateData: {
+        file: forgotPasswordTemplate,
+        variable: {
+          name: user.name,
+          link: `http://localhost:8080/reset_password?token=${token}`,
+        }
+      },
     });
   }
 
