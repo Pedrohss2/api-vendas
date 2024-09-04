@@ -4,6 +4,7 @@ import path from "path";
 import UserRepository from "../typeorm/repositories/UserRepository";
 import UserTokensRepository from "../typeorm/repositories/UserTokensRepository";
 import EtherealMail from "@config/mail/EtherealMail";
+import User from "../typeorm/entities/User";
 
 interface IRequest {
   email: string;
@@ -19,21 +20,25 @@ class SendForgotPasswordEmailService {
 
     if (!user) throw new AppError('User does not exists!');
 
-    const { token }  = await userTokneRepository.generate(user.id);
+    const { token } = await userTokneRepository.generate(user.id);
+    
+    this.sendEmail(user);
+  }
 
+  async sendEmail({ name, email}: User): Promise<void> {
     const forgotPasswordTemplate = path.resolve(__dirname, '..', 'views', 'forgot_password.hbs');
 
     await EtherealMail.sendMail({
       to: {
-        name: user.name,
-        email: user.email,
+        name: name,
+        email: email,
       },
       subject: '[API DE VENSAS]',
       templateData: {
         file: forgotPasswordTemplate,
-        variable: {
-          name: user.name,
-          link: `http://localhost:8080/reset_password?token=${token}`,
+        variables: {
+          name: name,
+          link: `http://localhost:8080/reset_password?token=`,
         }
       },
     });

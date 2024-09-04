@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
 import CreateSessionsService from '../services/CreateSessionsService';
+import EtherealMail from '@config/mail/EtherealMail';
+import path from 'path';
 
 
 export default class SessionsController {

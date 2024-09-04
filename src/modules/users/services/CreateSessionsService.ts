@@ -6,6 +6,8 @@ import express from "express";
 import { compare } from 'bcryptjs';
 import { sign } from "jsonwebtoken";
 import authConfig from "@config/auth";
+import EtherealMail from "@config/mail/EtherealMail";
+import path from "path";
  
 interface IRequest {
   email: string;
@@ -33,7 +35,27 @@ class CreateSessionsService {
       expiresIn: authConfig.jwt.expiresIn
     });
 
+    this.sendEmail(user);
+
     return { token };
+  }
+
+  async sendEmail({ name, email }: User): Promise<void> {
+    const sendMailTemplate = path.resolve(__dirname, '..', 'views', 'authenticated.hbs');
+    
+    await EtherealMail.sendMail({
+      to: {
+        name: name,
+        email: email,
+      },
+      subject: '[API DE VENDAS]',
+      templateData: {
+        file: sendMailTemplate,
+        variables: {
+          name: name,
+        }
+      },
+    });  
   }
 }
 
