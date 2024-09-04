@@ -27,6 +27,8 @@ class ResePasswordService {
     this.validateHours(userToken.created_at);
     
     user.password = await hash(password, 8);
+
+    await userRepository.save(user);
   }
 
   public async validateHours(created_at: Date): Promise<void> {
@@ -34,7 +36,7 @@ class ResePasswordService {
 
     const compareDate = addHours(tokenCreatedAt, 2);
 
-    isAfter(Date.now(), compareDate) ? new AppError('Token exprired') : ''; 
+    isAfter(Date.now(), compareDate) ? new AppError('Token exprired') : null; 
   }
 }
 
