@@ -10,6 +10,7 @@ interface IRequest {
   email: string;
 }
 
+
 class SendForgotPasswordEmailService {
 
   public async create({ email }: IRequest): Promise<void> {
@@ -22,10 +23,10 @@ class SendForgotPasswordEmailService {
 
     const { token } = await userTokneRepository.generate(user.id);
     
-    this.sendEmail(user);
+    this.sendEmail(token, user);
   }
 
-  async sendEmail({ name, email}: User): Promise<void> {
+  public async sendEmail(token: string, { name, email}: User): Promise<void> {
     const forgotPasswordTemplate = path.resolve(__dirname, '..', 'views', 'forgot_password.hbs');
 
     await EtherealMail.sendMail({
@@ -38,7 +39,7 @@ class SendForgotPasswordEmailService {
         file: forgotPasswordTemplate,
         variables: {
           name: name,
-          link: `http://localhost:8080/reset_password?token=`,
+          link: `http://localhost:8080/reset_password?token=${token}`,
         }
       },
     });

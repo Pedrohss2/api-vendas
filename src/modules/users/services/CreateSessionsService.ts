@@ -35,12 +35,12 @@ class CreateSessionsService {
       expiresIn: authConfig.jwt.expiresIn
     });
 
-    this.sendEmail(user);
+    this.sendEmail(token, user);
 
     return { token };
   }
 
-  async sendEmail({ name, email }: User): Promise<void> {
+  async sendEmail(token: string, { name, email }: User): Promise<void> {
     const sendMailTemplate = path.resolve(__dirname, '..', 'views', 'authenticated.hbs');
     
     await EtherealMail.sendMail({
@@ -53,6 +53,7 @@ class CreateSessionsService {
         file: sendMailTemplate,
         variables: {
           name: name,
+          link: `http://localhost:8080/reset_password?token=${token}`,
         }
       },
     });  
