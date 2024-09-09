@@ -3,10 +3,10 @@ import SessionsController from "@modules/users/controllers/SessionsController";
 import { celebrate, Joi, Segments } from "celebrate";
 
 
-const sessionsRoutes = Router();
+const sessionsRouter = Router();
 const sessionsController = new SessionsController();
 
-sessionsRoutes.post(
+sessionsRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
@@ -17,4 +17,4 @@ sessionsRoutes.post(
   sessionsController.login
 );
 
-export default sessionsRoutes;
+export default sessionsRouter;

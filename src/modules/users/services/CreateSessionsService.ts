@@ -53,7 +53,6 @@ class CreateSessionsService {
         file: sendMailTemplate,
         variables: {
           name: name,
-          link: `http://localhost:8080/reset_password?token=${token}`,
         }
       },
     });  
