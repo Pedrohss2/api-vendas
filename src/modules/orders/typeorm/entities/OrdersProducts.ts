@@ -14,7 +14,7 @@ class OrdersProducts {
   @Column('int')
   quantity: number;
 
-  @ManyToOne(() => Order, order => order.orderProduct)
+  @ManyToOne(() => Order, order => order.orderProducts)
   @JoinColumn({ name: 'orderId'}) 
   order: Order;
 
@@ -23,6 +23,12 @@ class OrdersProducts {
   })
   @JoinColumn({ name: 'productId'}) 
   product: Product;
+
+  @Column()
+  orderId: string;
+
+  @Column()
+  productId: string;
     
   @CreateDateColumn()
   created_at: Date;
