@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import ListUserService from "../services/ListUserService";
-import User from "../typeorm/entities/User";
 import CreateUserService from "../services/CreateUserService";
 
 export default class UsersController {

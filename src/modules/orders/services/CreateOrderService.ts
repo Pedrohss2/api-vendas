@@ -1,5 +1,5 @@
 
-import Order from '../typeorm/entities/Order';
+import Order from '../typeorm/entities/Orders';
 import { OrdersRepository } from '../typeorm/repositories/OrdersRepository';
 import { getCustomRepository } from 'typeorm';
 import { ProductsRepository } from '@modules/products/typeorm/repositories/ProductsRepository';

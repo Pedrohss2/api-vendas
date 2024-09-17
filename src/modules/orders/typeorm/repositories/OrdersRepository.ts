@@ -1,5 +1,5 @@
 import { EntityRepository, FindConditions, FindManyOptions, Repository } from "typeorm";
-import Order from "../entities/Order";
+import Order from "../entities/Orders";
 import Customers from "@modules/customers/typeorm/entities/Customers";
 
 interface IProduct {
