@@ -4,7 +4,7 @@ import UserRepository from "../typeorm/repositories/UserRepository";
 import { getCustomRepository } from "typeorm";
 import express from "express";
 import { compare } from 'bcryptjs';
-import { sign } from "jsonwebtoken";
+import { Secret, sign } from "jsonwebtoken";
 import authConfig from "@config/auth";
 import EtherealMail from "@config/mail/EtherealMail";
 import path from "path";
@@ -30,7 +30,7 @@ class CreateSessionsService {
 
     if (!passwordConfirmed) throw new AppError("Incorrect email/password combination!", 401);
     
-    const token = sign({}, authConfig.jwt.secret, {
+    const token = sign({}, authConfig.jwt.secret as Secret, {
       subject: user.id,
       expiresIn: authConfig.jwt.expiresIn
     });
