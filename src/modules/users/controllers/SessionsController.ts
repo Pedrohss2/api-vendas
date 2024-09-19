@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import CreateSessionsService from '../services/CreateSessionsService';
 import EtherealMail from '@config/mail/EtherealMail';
 import path from 'path';
+import { instanceToInstance } from 'class-transformer';
 
 
 export default class SessionsController {
@@ -12,6 +13,6 @@ export default class SessionsController {
     
     const user = await createSession.create({ email, password });
 
-    return response.json(user);
+    return response.json(instanceToInstance(user));
   }
 }
