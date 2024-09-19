@@ -3,7 +3,7 @@ import {CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGener
 import OrdersProducts from "./OrdersProducts";
 
 @Entity('orders')
-class Orders {
+class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -11,7 +11,9 @@ class Orders {
   @JoinColumn({ name: 'customerId'}) 
   customer: Customers;
     
-  @OneToMany(() => OrdersProducts, ordersProducts => ordersProducts.order)
+  @OneToMany(() => OrdersProducts, ordersProducts => ordersProducts.order, {
+    cascade: true
+  })
   orderProducts: OrdersProducts[];
 
   @CreateDateColumn()
@@ -21,4 +23,4 @@ class Orders {
   updated_at: Date;
 }
 
-export default Orders;
+export default Order;

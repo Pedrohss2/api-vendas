@@ -14,7 +14,7 @@ class ShowOrderService {
   public async show({ id }: IRequest): Promise<Order> {
     const orderRepository = getCustomRepository(OrdersRepository);
 
-    const order = await orderRepository.findById(id);
+    const order = await orderRepository.show(id);
     
     if (!order) throw new AppError("Order not found!");
 

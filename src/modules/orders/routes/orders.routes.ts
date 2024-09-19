@@ -13,9 +13,9 @@ ordersRouter.get(
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
-    }
+    },
   }),
-  orderController.show
+  orderController.show,
 );
 
 ordersRouter.post(

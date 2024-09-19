@@ -7,6 +7,9 @@ class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @OneToMany(() => OrdersProducts, ordersProduct => ordersProduct.product)
+  ordersProduct: OrdersProducts[];
+
   @Column()
   name: string;
 
@@ -15,9 +18,6 @@ class Product {
 
   @Column('decimal')
   quantity: number;
-
-  @OneToMany(() => OrdersProducts, ordersProduct => ordersProduct.productId)
-  ordersProduct: OrdersProducts[];
 
   @CreateDateColumn()
   created_at: Date;
