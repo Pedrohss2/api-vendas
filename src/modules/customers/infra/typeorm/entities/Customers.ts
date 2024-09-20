@@ -1,7 +1,8 @@
+import { ICustumer } from "@modules/customers/domain/models/ICustomer";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('customers')
-class Customers  {
+class Customers implements ICustumer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
