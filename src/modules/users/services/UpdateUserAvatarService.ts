@@ -1,6 +1,6 @@
 import AppError from "@shared/errors/appError";
-import User from "../typeorm/entities/User";
-import UserRepository from "../typeorm/repositories/UserRepository";
+import User from "../infra/typeorm/entities/User";
+import UserRepository from "../infra/typeorm/repositories/UserRepository";
 import { getCustomRepository } from "typeorm";
 import express from "express";
 import path from "path";

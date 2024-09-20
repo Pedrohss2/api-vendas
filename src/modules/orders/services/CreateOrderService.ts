@@ -1,9 +1,9 @@
 
-import Order from '../typeorm/entities/Orders';
-import { OrdersRepository } from '../typeorm/repositories/OrdersRepository';
+import Order from '../infra/typeorm/entities/Orders';
+import { OrdersRepository } from '../infra/typeorm/repositories/OrdersRepository';
 import { getCustomRepository } from 'typeorm';
-import { ProductsRepository } from '@modules/products/typeorm/repositories/ProductsRepository';
-import CustomersRepository from '@modules/customers/typeorm/repositories/CustomerRepository';
+import { ProductsRepository } from '@modules/products/infra/typeorm/repositories/ProductsRepository';
+import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomerRepository';
 import AppError from '@shared/errors/appError';
 
 

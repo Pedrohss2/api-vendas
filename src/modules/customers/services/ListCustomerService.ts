@@ -1,7 +1,7 @@
 import AppError from "@shared/errors/appError";
 import { createQueryBuilder, getCustomRepository } from "typeorm";
-import CustomersRepository from "../typeorm/repositories/CustomerRepository";
-import Customer from "../typeorm/entities/Customers";
+import CustomersRepository from "../infra/typeorm/repositories/CustomerRepository";
+import Customer from "../infra/typeorm/entities/Customers";
 
 interface IPaginateCustomer {
   from: number,
