@@ -2,20 +2,17 @@ import { getCustomRepository } from "typeorm";
 import { ProductsRepository } from "../infra/typeorm/repositories/ProductsRepository";
 import Product from "../infra/typeorm/entities/Product";
 import RedisCache from "@shared/cache/RedisCache";
+import { IPaginateProduct } from "../domain/models/IPaginateProduct";
+import { inject, injectable } from "tsyringe";
+import { IProductRepository } from "../domain/repositories/IProductRepository";
 
-interface IPaginateProduct {
-  from: number,
-  to: number,
-  per_page: number,
-  total: number,
-  current_page: number,
-  prev_page: number | null,
-  next_page: number | null,
-  data: Product[],
-}
-
+@injectable()
 class ListProductService {
   
+  constructor(
+    @inject('ProductsRepository') private productsRepository: IProductRepository
+  ) { };
+
   public async list(): Promise<IPaginateProduct> {
     const productsRepository = getCustomRepository(ProductsRepository);
     

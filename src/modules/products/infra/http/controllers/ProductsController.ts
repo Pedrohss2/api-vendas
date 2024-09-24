@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import ListProductService from "../../../services/ListProductService";
 import ShowProductService from "../../../services/ShowProductService";
 import CreateProductService from "../../../services/CreateProductService";
-import { Http2ServerResponse } from "http2";
 import UpdateProductService from "../../../services/UpdateProductService";
 import DeleteProductService from "../../../services/DeleteProductService";
+import { container } from "tsyringe";
 
 export default class ProductsController {
 
@@ -19,7 +19,7 @@ export default class ProductsController {
   public async show(request: Request, response: Response): Promise<Response>  {
     const { id } = request.params;
     
-    const showProduct = new ShowProductService();
+    const showProduct = container.resolve(ShowProductService);
 
     const product = await showProduct.show({ id });
 
@@ -28,7 +28,7 @@ export default class ProductsController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { name, price, quantity } = request.body;
-    const createProduct = new CreateProductService();
+    const createProduct = container.resolve(CreateProductService);
 
     const product = await createProduct.create({ name, price, quantity });
 
@@ -38,7 +38,7 @@ export default class ProductsController {
   public async update(request: Request, response: Response): Promise<Response> {
     const { name, price, quantity } = request.body;
     const { id } = request.params;
-    const updateProduct = new UpdateProductService();
+    const updateProduct = container.resolve(UpdateProductService);
 
     const product = await updateProduct.update({ id, name, price, quantity });
 
@@ -48,7 +48,7 @@ export default class ProductsController {
   public async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const deleteProduct = new DeleteProductService();
+    const deleteProduct = container.resolve(DeleteProductService);
 
     const product = await deleteProduct.delete({ id });
 

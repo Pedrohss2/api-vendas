@@ -1,6 +1,7 @@
-import { EntityRepository, FindConditions, FindManyOptions, Repository } from "typeorm";
 import Order from "../entities/Orders";
-import Customers from "@modules/customers/infra/typeorm/entities/Customers";
+import { IOrdersRepository } from "@modules/orders/domain/repositories/IOrdersRepository";
+import { getRepository, Repository } from "typeorm";
+import { ICustumer } from "@modules/customers/domain/models/ICustomer";
 
 interface IProduct {
   productId: string; 
@@ -9,28 +10,33 @@ interface IProduct {
 }
 
 interface IRequest {
-  customer: Customers;
+  customer: ICustumer;
   products: IProduct[];
 }
 
-@EntityRepository(Order)
-export class OrdersRepository extends Repository<Order> {
+export class OrdersRepository implements IOrdersRepository {
+  private ormRepository: Repository<Order>;
+
+  constructor() {
+    this.ormRepository = getRepository(Order);
+  }
 
   public async show(id: string): Promise<Order | undefined> {
-    const order = await this.findOne(id, {
+    
+    const order = await this.ormRepository.findOne(id, {
       relations: ['orderProducts', 'customer']
     });
     
     return order;
   }
 
-  public async createOrder({ customer, products }: IRequest): Promise<Order> {
-    const order = this.create({
+  public async create({ customer, products }: IRequest): Promise<Order> {
+    const order = this.ormRepository.create({
       customer,
       orderProducts: products,
     });
 
-    await this.save(order);
+    await this.ormRepository.save(order);
 
     return order;
   }

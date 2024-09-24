@@ -2,6 +2,7 @@ import { getRepository, Repository } from "typeorm";
 import Customers from "../entities/Customers";
 import { ICreateCustomer } from "@modules/customers/domain/models/ICreateCustomer";
 import { ICustomersRepository } from "@modules/customers/domain/repositories/ICustomersRepository";
+import { ICustumer } from "@modules/customers/domain/models/ICustomer";
 
 
 class CustomersRepository implements ICustomersRepository {
@@ -11,7 +12,7 @@ class CustomersRepository implements ICustomersRepository {
     this.ormRepository = getRepository(Customers);
   }
 
-  public async create({ name, email }: ICreateCustomer): Promise<Customers> {
+  public async create({ name, email }: ICreateCustomer): Promise<ICustumer> {
     const customer = await this.ormRepository.create({ name, email });
     
     await this.ormRepository.save(customer);
@@ -20,14 +21,14 @@ class CustomersRepository implements ICustomersRepository {
   }
 
 
-  public async save(customer: Customers): Promise<Customers> {
+  public async save(customer: Customers): Promise<ICustumer> {
     
     await this.ormRepository.save(customer);
 
     return customer;
   }
 
-  public async findByName(name: string): Promise<Customers | undefined> {
+  public async findByName(name: string): Promise<ICustumer | undefined> {
   
     const customer = await this.ormRepository.findOne({
       where: {
