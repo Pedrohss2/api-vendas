@@ -4,12 +4,13 @@ import ShowCustomerService from '../../../services/ShowCustomerService';
 import DeleteCustomerService from '../../../services/DeleteCustomerService';
 import UpdateCustomerService from '../../../services/UpdateCustomerService';
 import CreateCustomerService from '../../../services/CreateCustomersService';
-import { container } from 'tsyringe';
+import { container, injectable } from 'tsyringe';
+
 
 export default class CustomersController {
 
   public async list(request: Request, response: Response): Promise<Response> {
-    const listCustomer = new ListCustomersService();
+    const listCustomer = container.resolve(ListCustomersService);
 
     const customer = await listCustomer.list();
 
@@ -19,7 +20,7 @@ export default class CustomersController {
   public async show(request: Request, response: Response): Promise<Response> {
     const { customerId }  = request.params;
     
-    const showCustomer = new ShowCustomerService();
+    const showCustomer = container.resolve(ShowCustomerService);
 
     const customer = await showCustomer.show({ customerId });
 
@@ -39,7 +40,7 @@ export default class CustomersController {
   public async update(request: Request, response: Response): Promise<Response> {
     const { name, email } = request.body;
     const { userId } = request.params;
-    const updateCustomer = new UpdateCustomerService();
+    const updateCustomer = container.resolve(UpdateCustomerService);
 
     const customer = await updateCustomer.update({ userId, name, email });
 
@@ -49,7 +50,7 @@ export default class CustomersController {
   public async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const deleteCustomer = new DeleteCustomerService();
+    const deleteCustomer = container.resolve(DeleteCustomerService);
 
     const customer = await deleteCustomer.delete({ id });
 

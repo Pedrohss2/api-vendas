@@ -1,9 +1,9 @@
-import { IOrdersProduct } from "@modules/orders/domain/models/IOrdersProduct";
+import { IOrdersProducts } from "@modules/orders/domain/models/IOrdersProducts";
 
 export interface IProduct {
   id: string;
 
-  ordersProduct: IOrdersProduct[];
+  ordersProduct: IOrdersProducts[];
 
   name: string;
 

@@ -8,11 +8,12 @@ interface IFindProducts {
 }
 
 export interface IProductRepository {
+  createQueryBuilder(): unknown;
   findByName(name: string): Promise<IProduct | undefined>;
   findAllById(product: IFindProducts[]): Promise<IProduct[]>;
   save(product: IProduct): Promise<Product>;
-  updateStock(products: IUpdateStockProduct[]): Promise<IUpdateStockProduct[]>;
   create({ name, price, quantity }: ICreateProduct): Promise<IProduct>;
   findOne(id: string): Promise<IProduct | undefined>;
   remove(product: IProduct): Promise<void>;
+  list(): Promise<IProduct[]>;
 }

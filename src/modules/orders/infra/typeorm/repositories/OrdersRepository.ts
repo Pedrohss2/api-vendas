@@ -1,7 +1,7 @@
 import Order from "../entities/Orders";
 import { IOrdersRepository } from "@modules/orders/domain/repositories/IOrdersRepository";
+import Customers from "@modules/customers/infra/typeorm/entities/Customers";
 import { getRepository, Repository } from "typeorm";
-import { ICustumer } from "@modules/customers/domain/models/ICustomer";
 
 interface IProduct {
   productId: string; 
@@ -10,7 +10,7 @@ interface IProduct {
 }
 
 interface IRequest {
-  customer: ICustumer;
+  customer: Customers;
   products: IProduct[];
 }
 

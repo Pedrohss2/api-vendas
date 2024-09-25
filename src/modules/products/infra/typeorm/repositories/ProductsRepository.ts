@@ -32,9 +32,8 @@ export class ProductsRepository implements IProductRepository {
     return product;
   }
   
-  public async updateStock(products: IUpdateStockProduct[]): Promise<IUpdateStockProduct[]> {
-    await this.ormRepository.save(products);
-    
+  public async list(): Promise<IProduct[]> {
+    const products = await this.ormRepository.find();
     return products;
   }
 
@@ -71,7 +70,7 @@ export class ProductsRepository implements IProductRepository {
     return product;
   }
 
-   public async remove({ id }: IProduct): Promise<void> {
+  public async remove({ id }: IProduct): Promise<void> {
     const productDeleted = await this.ormRepository.delete(id);
   }
 }

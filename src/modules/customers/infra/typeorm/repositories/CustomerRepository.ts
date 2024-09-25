@@ -4,12 +4,17 @@ import { ICreateCustomer } from "@modules/customers/domain/models/ICreateCustome
 import { ICustomersRepository } from "@modules/customers/domain/repositories/ICustomersRepository";
 import { ICustumer } from "@modules/customers/domain/models/ICustomer";
 
-
 class CustomersRepository implements ICustomersRepository {
   private ormRepository: Repository<Customers>;
 
   constructor() {
     this.ormRepository = getRepository(Customers);
+  }
+
+  public async list(): Promise<ICustumer[]> {
+    const customers = await this.ormRepository.find();
+
+    return customers;
   }
 
   public async create({ name, email }: ICreateCustomer): Promise<ICustumer> {
@@ -49,6 +54,17 @@ class CustomersRepository implements ICustomersRepository {
     return customer;
   }
 
+  public async findOne(id: string): Promise<Customers | undefined> {
+    const customer = await this.ormRepository.findOne({
+      where: {
+        id,
+      }
+    });
+    
+    return customer;
+  }
+
+
   public async findByEmail(email: string): Promise<Customers | undefined> {
     const customer = await this.ormRepository.findOne({
       where: {
@@ -58,7 +74,10 @@ class CustomersRepository implements ICustomersRepository {
     
     return customer;
   }
-
+  
+  public async remove({ id }: ICustumer): Promise<void> {
+    const productDeleted = await this.ormRepository.delete(id);
+  }
 }
 
 export default CustomersRepository;

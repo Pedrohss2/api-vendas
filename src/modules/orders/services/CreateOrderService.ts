@@ -6,7 +6,17 @@ import { inject, injectable } from 'tsyringe';
 import { IOrdersRepository } from '../domain/repositories/IOrdersRepository';
 import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
 import { IProductRepository } from '@modules/products/domain/repositories/IProductRepository';
-import { IRequestCreateOrder } from '../domain/models/IRequestCreateOrder';
+
+
+interface IProduct {
+  id: string;
+  quantity: number;
+}
+
+interface IRequest {
+  customerId: string;
+  products: IProduct[];
+}
 
 @injectable()
 class CreateOrderService {
@@ -17,7 +27,7 @@ class CreateOrderService {
     @inject('ProductsRepository') private productsRepository: IProductRepository,
   ) { }
 
-  public async execute({ customerId, products }: IRequestCreateOrder): Promise<IOrders> {
+  public async execute({ customerId, products }: IRequest): Promise<IOrders> {
 
     const customerExists = await this.customersRepository.findById(customerId);
 
