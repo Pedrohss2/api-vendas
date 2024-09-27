@@ -1,12 +1,12 @@
 import AppError from "@shared/errors/appError";
-import User from "../infra/typeorm/entities/User";
-import UserRepository from "../infra/typeorm/repositories/UserRepository";
-import { getCustomRepository } from "typeorm";
 import { compare } from 'bcryptjs';
 import { Secret, sign } from "jsonwebtoken";
 import authConfig from "@config/auth";
 import EtherealMail from "@config/mail/EtherealMail";
 import path from "path";
+import { inject, injectable } from "tsyringe";
+import { IUserRepository } from "../domain/repositories/IUserRepository";
+import { IUser } from "../domain/models/IUser";
  
 interface IRequest {
   email: string;
@@ -17,11 +17,15 @@ interface IResponse {
   token: string;
 }
 
+@injectable()
 class CreateSessionsService {
 
+  constructor(
+    @inject('UserRepository') private userRepository: IUserRepository
+  ) {}
+
   public async create({ email, password }: IRequest): Promise<IResponse> {
-    const userRepository = getCustomRepository(UserRepository);
-    const user = await userRepository.findByEmail(email);
+    const user = await this.userRepository.findByEmail(email);
 
     if (!user) throw new AppError("Incorrect email/password combination!", 401);
     
@@ -39,7 +43,7 @@ class CreateSessionsService {
     return { token };
   }
 
-  async sendEmail(token: string, { name, email }: User): Promise<void> {
+  async sendEmail(token: string, { name, email }: IUser): Promise<void> {
     const sendMailTemplate = path.resolve(__dirname, '..', 'views', 'authenticated.hbs');
     
     await EtherealMail.sendMail({

@@ -9,7 +9,7 @@ import { container } from "tsyringe";
 export default class ProductsController {
 
   public async list(request: Request, response: Response): Promise<Response> {
-    const listProducts = container.resolve(ListProductService)
+    const listProducts = container.resolve(ListProductService);
 
     const products = await listProducts.list();
 

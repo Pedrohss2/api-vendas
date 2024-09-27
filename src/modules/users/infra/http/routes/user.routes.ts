@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 import UsersController from "../controllers/UsersController";
-import UserRepository from "../../typeorm/repositories/UserRepository";
 import isAuthenticated from "../../../../../shared/infra/http/middlewares/isAuthenticated";
 import UsersAvatarController from "../controllers/UsersAvatarController";
 import multer from "multer";

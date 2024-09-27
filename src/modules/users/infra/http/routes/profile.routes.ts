@@ -9,7 +9,7 @@ const profileController = new ProfileController();
 profileRouter.use(isAuthenticated);
 
 profileRouter.get(
-  '/',
+  '/:id',
   profileController.show
 );
 

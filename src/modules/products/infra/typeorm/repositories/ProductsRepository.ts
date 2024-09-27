@@ -12,8 +12,7 @@ interface IFindProducts {
 
 export class ProductsRepository implements IProductRepository {
   private ormRepository: Repository<Product>;
-  createQueryBuilder: any;
-
+  
   constructor() {
     this.ormRepository = getRepository(Product);
   }

@@ -8,7 +8,6 @@ interface IFindProducts {
 }
 
 export interface IProductRepository {
-  createQueryBuilder(): unknown;
   findByName(name: string): Promise<IProduct | undefined>;
   findAllById(product: IFindProducts[]): Promise<IProduct[]>;
   save(product: IProduct): Promise<Product>;
