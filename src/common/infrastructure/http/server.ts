@@ -5,5 +5,6 @@ const port = env.PORT;
 
 
 app.listen(port, () => {
-  console.log(`App rodando na porta ${port}`)
+  console.log(`App rodando na porta ${port}`);
+  
 });
