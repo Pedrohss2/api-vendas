@@ -1,0 +1,72 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id      String @id @default(uuid()) 
+  name    String @db.VarChar(100)
+  email   String @unique()
+  password String 
+  avatar  String? 
+  created_at DateTime @default(now())
+  updated_at  DateTime @updatedAt()
+  user_tokens user_tokens?
+}
+
+model products {
+  id      String @id @default(uuid()) 
+  name    String @db.VarChar(100)
+  price   Decimal 
+  quantity Int 
+  created_at DateTime @default(now())
+  updated_at  DateTime @updatedAt()
+  orders_product orders_products[]
+}
+
+model customers {
+  id      String @id @default(uuid()) 
+  name    String @db.VarChar(100)
+  email   String 
+  created_at DateTime @default(now())
+  updated_at  DateTime @updatedAt()
+  orders orders[]
+}
+
+model orders {
+  id      String @id @default(uuid()) 
+  created_at DateTime @default(now())
+  updated_at  DateTime @updatedAt()
+  customer  customers   @relation(fields: [customerId], references: [id]) 
+  customerId     String
+  orders_products orders_products[]
+}
+
+model user_tokens {
+  id      String @id @default(uuid())
+  token   String @unique() 
+  user  users @relation(fields: [user_id], references: [id]) 
+  user_id String @unique()
+  created_at DateTime @default(now())
+  updated_at  DateTime @updatedAt()
+}
+
+model orders_products {
+  id      String @id @default(uuid())
+  price   Decimal 
+  quantity  Int 
+  order orders @relation(fields: [orderId], references: [id])
+  product products @relation(fields: [productId], references: [id])
+  orderId String
+  productId String
+  created_at DateTime @default(now())
+  updated_at  DateTime @updatedAt()
+}
+
+
+

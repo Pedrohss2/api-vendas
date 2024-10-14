@@ -1,7 +1,9 @@
 import { app } from './app';
+import { env } from '../env/index'
 
-const PORT  = 8080;
+const port = env.PORT;
 
-app.listen(8080, () => {
-  console.log(`App rodando na porta ${8080}`)
+
+app.listen(port, () => {
+  console.log(`App rodando na porta ${port}`)
 });
