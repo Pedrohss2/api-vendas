@@ -1,7 +1,7 @@
 import express  from "express";
 import cors from 'cors';
 import { routes } from "./routes";
-import { erroHandler } from "@/common/domain/errors/middlewares/errorHandler";
+import { erroHandler } from "./middlewares/errorHandler";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from 'swagger-ui-express';
 
@@ -27,6 +27,5 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(routes);
 app.use(erroHandler);
-
 
 export { app };
