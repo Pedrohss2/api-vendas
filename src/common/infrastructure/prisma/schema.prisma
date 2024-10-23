@@ -26,7 +26,7 @@ model products {
   quantity Int 
   created_at DateTime @default(now())
   updated_at  DateTime @updatedAt()
-  orders_product orders_products[]
+  orders_products orders_products[]
 }
 
 model customers {
@@ -67,6 +67,3 @@ model orders_products {
   created_at DateTime @default(now())
   updated_at  DateTime @updatedAt()
 }
-
-
-
